@@ -1,0 +1,62 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'selenium-webdriver'
+
+driver = Selenium::WebDriver.for :firefox
+
+#Getting site
+driver.get "http://www.naukri.com"
+
+#Waiting for 10 secs
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+
+#Getting to click on Jobseeker, perhaps the older way of ruby is working here
+element = driver.find_element(:link_text, "Jobseeker Login")
+element.click()
+
+
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+
+#Finding the element and sending keys based on ids for username/ password and submitting
+emailid=driver.find_element(:id => 'emailTxt')
+emailid.send_keys("your-emailid-here")
+
+
+passw=driver.find_element(:id => 'pwd1')
+passw.send_keys("your-password-here")
+
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+element = driver.find_element(:id => 'sbtLog')
+element.click()
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+
+#Clicking on update profile
+element = driver.find_element(:class => 'w205')
+element.click()
+puts "Page title is #{driver.title}"
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+#Clicking the upload link
+element = driver.find_element(:id => "uploadLink")
+element.click()
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+puts "Page title is #{driver.title}"
+
+
+#Uploading resume and sending resume as a key
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+element = driver.find_element(:id => "attachCV").send_keys("your-absolute-file-path")
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+#Clicking the submit button on child window
+ele = driver.find_element(:class => 'w85bt')
+ele.click()
+wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+puts "Page title is #{driver.title}"
+
+#driver.quit
